@@ -191,7 +191,7 @@
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fas fa-file-word"></i>&nbsp;<span>2k Words</span>
+            <i class="fas fa-file-word"></i>&nbsp;<span>2.1k Words</span>
         </span>
     
     
@@ -259,6 +259,9 @@
 <li><code>default</code> 子句可以省略不用。</li>
 <li>自定义函数尽量放在 <code>main</code> 函数之前，若要放在 <code>main</code> 函数后面，需要在 <code>main</code> 函数之前先声明自定义函数。</li>
 </ol>
+<blockquote>
+<p>编译器不优化情况下，for 循环里 ++i 比 i++ 要快一些。</p>
+</blockquote>
 <h3 id="存储类别"><a href="#存储类别" class="headerlink" title="存储类别"></a>存储类别</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">自动（<span class="keyword">auto</span>）</span><br><span class="line">静态（<span class="keyword">static</span>）</span><br><span class="line">寄存器（<span class="keyword">register</span>）</span><br><span class="line">外部（<span class="keyword">extern</span>）</span><br></pre></td></tr></table></figure>
 <p>只有 局部自动变量 和 形式参数 可以作为 寄存器变量；</p>
 <p>一个计算机系统中的寄存器数目有限，不能定义任意多个寄存器变量；</p>
