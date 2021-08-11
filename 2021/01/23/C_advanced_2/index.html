@@ -191,7 +191,7 @@
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fas fa-file-word"></i>&nbsp;<span>2.5k Words</span>
+            <i class="fas fa-file-word"></i>&nbsp;<span>2.6k Words</span>
         </span>
     
     
@@ -210,60 +210,110 @@
         <div class="article-content markdown-body">
             <h2 id="0x00-Preface"><a href="#0x00-Preface" class="headerlink" title="0x00 Preface"></a>0x00 Preface</h2><p>适逢假期，走马观花地看完了参考里的三本书，另外仔细研读了《C、C++指针经验总结》，精辟的语言让我对指针方面的理解总算是登堂入室，相比之下，其他书长篇大论的论述，着实有些生涩难读，故大致将一些注意到的细节整理到该文，以作后期查阅，并勉强冠上“高级篇”的标题，往后有更深的理解再作补充吧。</p>
 <h2 id="0x01-Main-body"><a href="#0x01-Main-body" class="headerlink" title="0x01 Main body"></a>0x01 Main body</h2><ul>
-<li>一个函数如果使用了指针作为形参，那么在函数调用语句的实参和形参的结合过程中，必须保证类型一致，否则需要强制转换。</li>
-<li>如果一个整型常量的第一个字符是数字 0，那么该常量将被视作八进制数。</li>
-<li><code>&#39;&#39;</code> 引起的一个字符代表一个整数，<code>&quot;&quot;</code> 括起的一个字符代表一个指针。</li>
-<li>一个‘L’的 <code>NUL</code> 用于结束一个 ACSII 字符串，两个‘L’的 <code>NULL</code> 用于表示什么也不指向（空指针）。</li>
-<li>结构中允许存在位段、无名字段以及字对齐所需的填充字段。位段的类型必须是 int, unsigned int 或 signed int（或加上限定符）。至于 int 位段的值可不可以取负值则取决于编译器。</li>
-<li><img src="/images/C_declare_priority.png"><br>这个声明表示 “next是一个指针，它指向一个函数，该函数返回另一个指针，该指针指向一个类型为 char 的常量指针”。</li>
-<li><img src="/images/C_declare_priority2.png"></li>
-<li>把 typedef 看成是一种彻底的“封装”类型；可以用其他类型说明符对<strong>宏类型名</strong>进行扩展；在连续几个变量的声明中，用 typedef 定义的类型能够保证声明中所有的变量均为同一种类型，而用 #define 定义的类型则无法保证。</li>
-<li><img src="/images/typedef.png"></li>
-<li>动态库文件的扩展名是 “s”，静态库文件的扩展名是 “a”</li>
-<li>堆中的所有东西都是匿名的，不能按名字直接访问，只能通过指针间接访问。</li>
-<li><img src="/images/heap_location.png"></li>
-<li>从堆中获取内存的惟一办法就是通过调用 malloc、calloc、realloc 库函数<ul>
+<li><p>一个函数如果使用了指针作为形参，那么在函数调用语句的实参和形参的结合过程中，必须保证类型一致，否则需要强制转换。</p>
+</li>
+<li><p>如果一个整型常量的第一个字符是数字 0，那么该常量将被视作八进制数。</p>
+</li>
+<li><p><code>&#39;&#39;</code> 引起的一个字符代表一个整数，<code>&quot;&quot;</code> 括起的一个字符代表一个指针。</p>
+</li>
+<li><p>一个‘L’的 <code>NUL</code> 用于结束一个 ACSII 字符串，两个‘L’的 <code>NULL</code> 用于表示什么也不指向（空指针）。</p>
+</li>
+<li><p>结构中允许存在位段、无名字段以及字对齐所需的填充字段。位段的类型必须是 int, unsigned int 或 signed int（或加上限定符）。至于 int 位段的值可不可以取负值则取决于编译器。</p>
+</li>
+<li><p><img src="/images/C_declare_priority.png"><br>这个声明表示 “next是一个指针，它指向一个函数，该函数返回另一个指针，该指针指向一个类型为 char 的常量指针”。</p>
+</li>
+<li><p><img src="/images/C_declare_priority2.png"></p>
+</li>
+<li><p>把 typedef 看成是一种彻底的“封装”类型；可以用其他类型说明符对<strong>宏类型名</strong>进行扩展；在连续几个变量的声明中，用 typedef 定义的类型能够保证声明中所有的变量均为同一种类型，而用 #define 定义的类型则无法保证。</p>
+</li>
+<li><p><img src="/images/typedef.png"></p>
+</li>
+<li><p>动态库文件的扩展名是 “s”，静态库文件的扩展名是 “a”</p>
+</li>
+<li><p>堆中的所有东西都是匿名的，不能按名字直接访问，只能通过指针间接访问。</p>
+</li>
+<li><p><img src="/images/heap_location.png"></p>
+</li>
+<li><p>从堆中获取内存的惟一办法就是通过调用 malloc、calloc、realloc 库函数</p>
+<ul>
 <li>calloc 在返回指针之前先把分配好的内存的内容都清空为零</li>
 <li>realloc 改变一个指针所指向的内存块的大小，可扩大可缩小，它经常把内存拷贝到别的地方然后将指向新地址的指针返回给你</li>
 </ul>
 </li>
-<li>堆经常会出现两种类型的问题：<ul>
+<li><p>堆经常会出现两种类型的问题：</p>
+<ul>
 <li>内存损坏：释放或改写仍在使用的内存</li>
 <li>内存泄漏：未释放不再使用的内存</li>
 </ul>
 </li>
-<li>二维数组不能直接传递给函数，更多维数组必须把它分解为几个维数更少的数组。</li>
-<li>从逻辑上删除一段代码：特别是代码内部有注释，<strong>注释不能嵌套！</strong><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">if</span> 0</span></span><br><span class="line">	statements</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure></li>
-<li>假如这个程序的源代码由几个源文件所组成，那么使用该函数的源文件都必须写明该函数的原型。把原型放在头文件中并使用 <code>#include</code> 指令包含它们，可以避免由于同一个声明的多份拷贝而导致的维护性问题。</li>
-<li>数组参数是以引用形式调用的，即<strong>传址调用</strong>；标量和常量是按值传递的，即<strong>传值调用</strong>。在函数中对标量参数的任何修改都会在函数返回时丢失，因此，被调用函数无法修改调用函数以传值形式传递给它的参数。然而，当被调用函数修改数组参数的其中一个元素时，调用函数所传递的数组就会被实际地修改。</li>
-<li>gets() 丢弃换行符，在该行末尾存储一个 <code>NUL</code> 字节（一个 <code>NUL</code> 字节是指字节模式为全 0 的字节，类似 ‘\0’ 这样的字符常量）然后，gets() 返回一个非 <code>NULL</code> 值，表示该行已被成功读取。当 gets() 被调用但事实上不存在输入行时，它就返回 <code>NULL</code> 值，表示它到达了输入的末尾（文件尾）。</li>
-<li>字符串就是一串以 <code>NUL</code> 字节结尾的字符。<code>NUL</code> 作为字符串终止符，它本身并不被看作是字符串的一部分。<strong>字符串常量</strong>就是双引号括起来的一串字符。</li>
-<li>当 scanf() 对输入值进行转换时，它只读取需要读取的字符。这样该输入行包含了最后一个值的剩余部分仍会留在那里，等待被读取。while 循环将读取并丢弃这些剩余的字符。<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>((ch = getchar()) != EOF &amp;&amp; ch != <span class="string">&#x27;\n&#x27;</span>)</span><br></pre></td></tr></table></figure></li>
-<li>如果输入中不再存在任何字符，函数就会返回常量 EOF（在 stdio.h 中定义），用于提示文件的结尾。EOF 需要的位数比字符型值所能提供的位数要多，这也是 getchar 返回一个整型值而不是字符值的原因。然而，把 getchar 的返回值首先存储于 ch 中将导致它被截短。</li>
-<li>如果一个多字节字符常量的前面有一个 L，那么它就是宽字符常量，如 L’abc’</li>
-<li>当一个字符串常量出现于一个表达式中时，表达式所使用的值就是这些字符所存储的地址，而不是这些字符本身。你不能把字符串常量赋值给一个字符数组，因为字符串常量的直接值是一个指针。</li>
-<li>signed 一般只用于 char 类型，因为其他整型类型在缺省情况下都是有符号数。</li>
-<li>变量的缺省存储类型取决于它的声明位置。凡是在任何代码块之外声明的变量总是存储于静态内存中，即不属于堆栈的内存。对于这类变量，你无法为它们指定其他存储类型。</li>
-<li>在代码块内部声明的变量的缺省存储类型是自动的，即它存储于堆栈中。如果加上 static，可以使它的存储类型从自动变为静态。</li>
-<li>函数形参不能声明为静态，因为实参总是在堆栈中传递给函数，用于支持递归。</li>
-<li>当 <strong>static</strong> 用于函数定义时，或用于代码块之外的变量声明时，它用于修改标识符的外部链接属性，但只能在声明它们的源文件中访问；当它用于代码块内部的变量声明时， 它用于修改变量的存储类型，从自动变量修改为静态，用这种方式声明的变量在程序执行之前创建，并在程序的整个执行期间一直存在，而不是每次在代码块开始执行时创建，在代码块执行完毕后销毁。</li>
-<li><img src="/images/scope_link_storage.png"></li>
-<li>前缀后缀操作符的结果不是被它们所修改的变量，而是变量值的拷贝。</li>
-<li>|| &amp;&amp; 操作符具有短路求值性质，如果表达式的值根据左操作数可决定，就不再对右操作数求值；| &amp; 两边的操作数都要进行求值。</li>
-<li>连续赋值中各个变量的长度不一。</li>
-<li>C 可以用于设计和实现抽象数据类型 ADT，它可以限制函数和数据定义的作用域。这个技巧也被称为黑盒设计。通过 static 实现限制对那些并非接口的函数和数据的访问。</li>
-<li>strlen 的结果是个无符号数，下面两等式不相等；如果把 strlen 的返回值强制转换为 int，就可以消除这个问题。<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(<span class="built_in">strlen</span>(x) &gt;= <span class="built_in">strlen</span>(y))...</span><br><span class="line"><span class="keyword">if</span>(<span class="built_in">strlen</span>(x) - <span class="built_in">strlen</span>(y) &gt;= <span class="number">0</span>)...</span><br></pre></td></tr></table></figure></li>
-<li>此时 sim 相当于类型名而不是结构标签。<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span>&#123;</span></span><br><span class="line">	<span class="keyword">int</span> a;</span><br><span class="line">&#125;sim;</span><br><span class="line"></span><br><span class="line">sim x;</span><br></pre></td></tr></table></figure></li>
-<li>对边界要求最严格的成员首先出现，对边界要求最弱的成员最后出现。这种做法可以最大限度地减少因边界对齐而带来的空间损失。(offsetof 宏)</li>
-<li>把位段成员显式地声明为 signed int 或 unsigned int，位段是不可移植的，使源代码中位的操作表达得更为清楚。</li>
-<li>如果操作系统无法向 malloc 提供更多的内存，就返回一个 NULL 指针，因此需要检查返回值。</li>
-<li>动态分配的内存必须整块一起释放。但是，realloc 函数可以缩小一块动态分配的内存，有效地释放它尾部的部分内存。</li>
-<li>定义域错误：如果一个函数的参数不在该函数的定义域之内；<br>范围错误：如果一个函数的结果值过大或过小，无法用 double 类型表示。</li>
-<li><strong>堆栈帧：</strong>一个函数分成三个部分：函数序（prologue）、函数体（body）和函数跋（epilogue）。<ul>
+<li><p>二维数组不能直接传递给函数，更多维数组必须把它分解为几个维数更少的数组。</p>
+</li>
+<li><p>从逻辑上删除一段代码：特别是代码内部有注释，<strong>注释不能嵌套！</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">if</span> 0</span></span><br><span class="line">	statements</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure></li>
+<li><p>假如这个程序的源代码由几个源文件所组成，那么使用该函数的源文件都必须写明该函数的原型。把原型放在头文件中并使用 <code>#include</code> 指令包含它们，可以避免由于同一个声明的多份拷贝而导致的维护性问题。</p>
+</li>
+<li><p>数组参数是以引用形式调用的，即<strong>传址调用</strong>；标量和常量是按值传递的，即<strong>传值调用</strong>。在函数中对标量参数的任何修改都会在函数返回时丢失，因此，被调用函数无法修改调用函数以传值形式传递给它的参数。然而，当被调用函数修改数组参数的其中一个元素时，调用函数所传递的数组就会被实际地修改。</p>
+</li>
+<li><p>gets() 丢弃换行符，在该行末尾存储一个 <code>NUL</code> 字节（一个 <code>NUL</code> 字节是指字节模式为全 0 的字节，类似 ‘\0’ 这样的字符常量）然后，gets() 返回一个非 <code>NULL</code> 值，表示该行已被成功读取。当 gets() 被调用但事实上不存在输入行时，它就返回 <code>NULL</code> 值，表示它到达了输入的末尾（文件尾）。</p>
+</li>
+<li><p>字符串就是一串以 <code>NUL</code> 字节结尾的字符。<code>NUL</code> 作为字符串终止符，它本身并不被看作是字符串的一部分。<strong>字符串常量</strong>就是双引号括起来的一串字符。</p>
+</li>
+<li><p>当 scanf() 对输入值进行转换时，它只读取需要读取的字符。这样该输入行包含了最后一个值的剩余部分仍会留在那里，等待被读取。while 循环将读取并丢弃这些剩余的字符。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>((ch = getchar()) != EOF &amp;&amp; ch != <span class="string">&#x27;\n&#x27;</span>)</span><br></pre></td></tr></table></figure></li>
+<li><p>如果输入中不再存在任何字符，函数就会返回常量 EOF（在 stdio.h 中定义），用于提示文件的结尾。EOF 需要的位数比字符型值所能提供的位数要多，这也是 getchar 返回一个整型值而不是字符值的原因。然而，把 getchar 的返回值首先存储于 ch 中将导致它被截短。</p>
+</li>
+<li><p>如果一个多字节字符常量的前面有一个 L，那么它就是宽字符常量，如 L’abc’</p>
+</li>
+<li><p>当一个字符串常量出现于一个表达式中时，表达式所使用的值就是这些字符所存储的地址，而不是这些字符本身。你不能把字符串常量赋值给一个字符数组，因为字符串常量的直接值是一个指针。</p>
+</li>
+<li><p>signed 一般只用于 char 类型，因为其他整型类型在缺省情况下都是有符号数。</p>
+</li>
+<li><p>变量的缺省存储类型取决于它的声明位置。凡是在任何代码块之外声明的变量总是存储于静态内存中，即不属于堆栈的内存。对于这类变量，你无法为它们指定其他存储类型。</p>
+</li>
+<li><p>在代码块内部声明的变量的缺省存储类型是自动的，即它存储于堆栈中。如果加上 static，可以使它的存储类型从自动变为静态。</p>
+</li>
+<li><p>函数形参不能声明为静态，因为实参总是在堆栈中传递给函数，用于支持递归。</p>
+</li>
+<li><p>当 <strong>static</strong> 用于函数定义时，或用于代码块之外的变量声明时，它用于修改标识符的外部链接属性，但只能在声明它们的源文件中访问；当它用于代码块内部的变量声明时， 它用于修改变量的存储类型，从自动变量修改为静态，用这种方式声明的变量在程序执行之前创建，并在程序的整个执行期间一直存在，而不是每次在代码块开始执行时创建，在代码块执行完毕后销毁。</p>
+</li>
+<li><p><img src="/images/scope_link_storage.png"></p>
+</li>
+<li><p>前缀后缀操作符的结果不是被它们所修改的变量，而是变量值的拷贝。</p>
+</li>
+<li><p>|| &amp;&amp; 操作符具有短路求值性质，如果表达式的值根据左操作数可决定，就不再对右操作数求值；| &amp; 两边的操作数都要进行求值。</p>
+</li>
+<li><p>连续赋值中各个变量的长度不一。</p>
+</li>
+<li><p>C 可以用于设计和实现抽象数据类型 ADT，它可以限制函数和数据定义的作用域。这个技巧也被称为黑盒设计。通过 static 实现限制对那些并非接口的函数和数据的访问。</p>
+</li>
+<li><p>strlen 的结果是个无符号数，下面两等式不相等；如果把 strlen 的返回值强制转换为 int，就可以消除这个问题。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(<span class="built_in">strlen</span>(x) &gt;= <span class="built_in">strlen</span>(y))...</span><br><span class="line"><span class="keyword">if</span>(<span class="built_in">strlen</span>(x) - <span class="built_in">strlen</span>(y) &gt;= <span class="number">0</span>)...</span><br></pre></td></tr></table></figure></li>
+<li><p>此时 sim 相当于类型名而不是结构标签。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span>&#123;</span></span><br><span class="line">	<span class="keyword">int</span> a;</span><br><span class="line">&#125;sim;</span><br><span class="line"></span><br><span class="line">sim x;</span><br></pre></td></tr></table></figure></li>
+<li><p>对边界要求最严格的成员首先出现，对边界要求最弱的成员最后出现。这种做法可以最大限度地减少因边界对齐而带来的空间损失。(offsetof 宏)</p>
+</li>
+<li><p>把位段成员显式地声明为 signed int 或 unsigned int，位段是不可移植的，使源代码中位的操作表达得更为清楚。</p>
+</li>
+<li><p>如果操作系统无法向 malloc 提供更多的内存，就返回一个 NULL 指针，因此需要检查返回值。</p>
+</li>
+<li><p>动态分配的内存必须整块一起释放。但是，realloc 函数可以缩小一块动态分配的内存，有效地释放它尾部的部分内存。</p>
+</li>
+<li><p>定义域错误：如果一个函数的参数不在该函数的定义域之内；<br>范围错误：如果一个函数的结果值过大或过小，无法用 double 类型表示。</p>
+</li>
+<li><p><strong>堆栈帧：</strong>一个函数分成三个部分：函数序（prologue）、函数体（body）和函数跋（epilogue）。</p>
+<ul>
 <li>函数序用于执行函数启动需要的一些工作，例如为局部变量保留堆栈中的内存。</li>
 <li>函数体是用于执行有用工作的地方。</li>
 <li>函数跋用于在函数即将返回之前清理堆栈。</li>
 </ul>
+</li>
+<li><p>引用型定义</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b, <span class="keyword">int</span> &amp;c)</span></span>&#123;</span><br><span class="line">	c = a + b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>对比转换：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> ret = <span class="number">0</span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">getRet</span><span class="params">(<span class="keyword">int</span> &amp;r)</span></span>&#123;</span><br><span class="line">	++r;</span><br><span class="line">&#125;</span><br><span class="line">调用：getRet(ret);</span><br></pre></td></tr></table></figure>
+<p>plain C（纯 C 环境）</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> ret = <span class="number">0</span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">getRet</span><span class="params">(<span class="keyword">int</span> *r)</span></span>&#123;</span><br><span class="line">	++(*r);</span><br><span class="line">&#125;</span><br><span class="line">调用：getRet(&amp;ret);</span><br></pre></td></tr></table></figure>
+
 </li>
 </ul>
 <h2 id="0x02-Reference"><a href="#0x02-Reference" class="headerlink" title="0x02 Reference"></a>0x02 Reference</h2><p><em>《C陷阱与缺陷》</em><br><em>《C专家编程》</em><br><em>《C和指针(第二版)》</em></p>
